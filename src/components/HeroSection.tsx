@@ -1,55 +1,37 @@
 import Image from "next/image";
-// components/HeroSection.js
-export default function HeroSection() {
+
+const HeroSection = () => {
   return (
-    <section className="bg-white">
-      <div className="relative overflow-x-hidden">
-        {/* Container for the image */}
-        <div className="relative w-full">
-          <Image
-            src="/images/home-hero.jpeg"
-            alt="Furniture Collection"
-            width={1440}
-            height={100}
-            loading="eager"
-            className="w-full h-auto"
-          />
-        </div>
+    <section className="relative max-w-[1440px] mx-auto flex items-center justify-end bg-white h-[700px]">
+      {/* Image Section */}
+      <div className="absolute opacity-80 md:opacity-100 inset-0 w-full h-full">
+        <Image
+          src={"/images/hero-image.jpeg"}
+          alt="Decorative Room"
+          layout="fill"
+          objectFit="cover"
+          priority
+        />
+      </div>
 
-        {/* Left content */}
-        <div className="heroText bg-[#FFF3E3] hidden md:block w-[34rem] absolute top-[25%] left-[75%] transform -translate-x-[50%] rounded-[6px] p-[4rem]">
-          <p className="text-gray-500 uppercase font-medium text-sm mb-2">
-            New Arrival
-          </p>
-          <h1 className="text-4xl font-bold text-[#B88E2F] mb-4">
-            Discover Our <br /> New Collection
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis.
-          </p>
-          <button className="px-6 py-2 bg-[#B88E2F] text-white font-semibold rounded">
-            Buy Now
-          </button>
-        </div>
-
-        {/* Mobile content */}
-        <div className="md:hidden absolute bottom-[20%] left-1/2 transform -translate-x-1/2 w-full p-4 bg-[#FFF3E3] text-center rounded-lg">
-          <p className="text-gray-500 uppercase font-medium text-sm mb-2">
-            New Arrival
-          </p>
-          <h1 className="text-2xl font-bold text-[#B88E2F] mb-4">
-            Discover Our <br /> New Collection
-          </h1>
-          <p className="text-gray-600 mb-6 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis.
-          </p>
-          <button className="px-6 py-2 bg-[#B88E2F] text-white font-semibold rounded">
-            Buy Now
-          </button>
-        </div>
+      <div className="relative md:right-8 z-10 md:w-1/2 w-full bg-[#fff] p-8 md:p-12 rounded-md shadow-outer font-poppins">
+        <p className="text-sm lg:text-base uppercase font-semibold text-[#333333] mb-[10px]">
+          New Arrival
+        </p>
+        <h1 className="text-[40px] lg:text-[52px] leading-[50px] font-bold text-[#B88E2F] mb-5">
+          Discover Our <br />
+          New Collection
+        </h1>
+        <p className="text-[#333333] text-[15px] sm:text-base md:text-lg mb-12">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
+          tellus, luctus nec ullamcorper mattis.
+        </p>
+        <button className="bg-[#B88E2F] text-white text-sm md:text-base px-[60px] py-[14px] md:px-[65px] md:py-[15px] lg:px-[70px] lg:py-[17px] text-center content-center rounded-sm shadow-md hover:bg-[#b88f2ff8] font-bold">
+          Buy Now
+        </button>
       </div>
     </section>
   );
-}
+};
+
+export default HeroSection;
