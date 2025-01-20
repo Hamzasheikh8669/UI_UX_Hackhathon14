@@ -18,7 +18,7 @@ const HeroSection = () => {
         <p className="text-sm lg:text-base uppercase font-semibold text-[#333333] mb-[10px]">
           New Arrival
         </p>
-        <h1 className="text-[40px] lg:text-[52px] leading-[50px] font-bold text-[#B88E2F] mb-5">
+        <h1 className="text-[30px] lg:text-[52px] leading-[50px] font-bold text-[#B88E2F] mb-5">
           Discover Our <br />
           New Collection
         </h1>
