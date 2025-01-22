@@ -34,25 +34,25 @@ export default function Footer() {
             <h3 className="text-base font-medium text-gray-500">Links</h3>
             <nav className="flex flex-col space-y-4">
               <Link
-                href="#"
+                href="/"
                 className="text-base text-gray-600 hover:text-gray-900"
               >
                 Home
               </Link>
               <Link
-                href="#"
+                href="/shop"
                 className="text-base text-gray-600 hover:text-gray-900"
               >
                 Shop
               </Link>
               <Link
-                href="#"
+                href="/blog"
                 className="text-base text-gray-600 hover:text-gray-900"
               >
-                About
+                Blog
               </Link>
               <Link
-                href="#"
+                href="/contact"
                 className="text-base text-gray-600 hover:text-gray-900"
               >
                 Contact
