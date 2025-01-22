@@ -19,6 +19,7 @@ export default function ProductSection() {
         console.error("Error fetching products:", error);
       }
     }
+    
     getProducts();
   }, []);
 
