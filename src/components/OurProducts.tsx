@@ -45,33 +45,28 @@ export default function ProductSection() {
 
               {/* Product Image */}
               <div className="relative aspect-square overflow-hidden bg-gray-100">
-                {product.productImage ? (
+                {product.productImage && (
                   <Image
-                    src={
-                      urlFor(product.productImage).url() || "/placeholder.svg"
-                    }
-                    alt={product.productName || "Product"}
-                    fill
+                    src={urlFor(product.productImage).url()}
+                    alt="product image"
+                    height={300}
+                    width={300}
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
                   />
-                ) : (
-                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-400 text-sm">No Image</span>
-                  </div>
                 )}
               </div>
 
               {/* Product Info */}
               <div className="p-4">
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  {product.productName || "Untitled Product"}
+                  {product.title}
                 </h3>
                 <p className="text-sm text-gray-600 mb-2">
-                  {product.title || "No description available"}
+                  {product.productName}
                 </p>
                 <div className="flex items-center justify-between mb-4">
                   <p className="text-lg font-bold text-gray-900">
-                    Rp {new Intl.NumberFormat().format(product.price || 0)}
+                    ${product.price}
                   </p>
                 </div>
 
