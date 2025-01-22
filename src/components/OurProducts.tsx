@@ -1,7 +1,7 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import type { Product } from "../../types/productTypes";
+
+import { Product } from "../../types/productTypes";
 import { client } from "@/sanity/lib/client";
 import { four } from "@/lib/queries";
 import Image from "next/image";
