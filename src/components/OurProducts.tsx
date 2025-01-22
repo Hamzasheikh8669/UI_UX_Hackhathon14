@@ -36,19 +36,20 @@ export default function ProductSection() {
               className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               {/* Sale Badge */}
-                 
-                <div className="absolute top-6 right-4 z-10">
-                  <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500 text-white text-sm font-medium">
+
+              <div className="absolute top-6 right-4 z-10">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500 text-white text-sm font-medium">
                   -{product.dicountPercentage}%
-                  </span>
-                </div>
-              
+                </span>
+              </div>
 
               {/* Product Image */}
               <div className="relative aspect-square overflow-hidden bg-gray-100">
                 {product.productImage ? (
                   <Image
-                    src={urlFor(product.productImage).url() || "/placeholder.svg"}
+                    src={
+                      urlFor(product.productImage).url() || "/placeholder.svg"
+                    }
                     alt={product.productName || "Product"}
                     fill
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
