@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../types/productTypes"; // Ensure this file exists and is correctly typed
 import { client } from "@/sanity/lib/client"; // Ensure Sanity client is set up properly
-import { four } from "@/lib/queries"; // Ensure the query is correctly defined
+import { eight, allProducts } from "@/lib/queries"; // Ensure the query is correctly defined
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image"; // Ensure this function handles null/undefined images gracefully
 import { Heart, Share2 } from "lucide-react";
@@ -13,7 +13,7 @@ export default function ProductSection() {
   useEffect(() => {
     async function getProducts() {
       try {
-        const fetchProducts: Product[] = await client.fetch(four);
+        const fetchProducts: Product[] = await client.fetch(eight);
         setProducts(fetchProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
