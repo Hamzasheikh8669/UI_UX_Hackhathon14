@@ -18,7 +18,7 @@ export default function ProductSection() {
   }, []);
 
   return (
-    <section className="py-12 lg:py-16 bg-gray-100">
+    <section className="py- lg:py-16 bg-gray-100">
       <div className="container mx-auto px-4 lg:px-20">
         {/* Title */}
         <h2 className="mb-8 text-3xl font-bold text-gray-900 lg:text-4xl text-center">
@@ -47,21 +47,22 @@ export default function ProductSection() {
                 <h3 className="text-lg font-semibold text-gray-800">
                   {product.productName}
                 </h3>
-                <div className="text-md font-bold text-gray-500">{product.title}
-                <p className="mt-2 text-xl font-bold text-[#B88E2F]">
-                  {product.price}
-                </p>
-              </div>
-              {/* Add to Cart / Labels */}
-              <div className="mt-4 flex justify-between items-center">
-                <span className="bg-green-100 text-green-600 text-xs font-semibold px-2 py-1 rounded">
-                  New
-                </span>
+                <div className="text-md font-bold text-gray-500">
+                  {product.title}
+                  <p className="mt-2 text-xl font-bold text-[#B88E2F]">
+                    {product.price}
+                  </p>
+                </div>
+                {/* Add to Cart / Labels */}
+                <div className="mt-4 flex justify-between items-center">
+                  <span className="bg-green-100 text-green-600 text-xs font-semibold px-2 py-1 rounded">
+                    New
+                  </span>
 
-                <span className="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded">
-                 -{product.dicountPercentage}%
-                </span>
-              </div>
+                  <span className="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded">
+                    -{product.dicountPercentage}%
+                  </span>
+                </div>
               </div>
             </div>
           ))}
