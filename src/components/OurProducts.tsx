@@ -1,10 +1,12 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { Product } from "../../types/productTypes";
+import type { Product } from "../../types/productTypes";
 import { client } from "@/sanity/lib/client";
 import { four } from "@/lib/queries";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import { Heart, Share2 } from "lucide-react";
 
 export default function ProductSection() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,50 +20,67 @@ export default function ProductSection() {
   }, []);
 
   return (
-    <section className="py- lg:py-16 bg-gray-100">
+    <section className="py-12 lg:py-16">
       <div className="container mx-auto px-4 lg:px-20">
         {/* Title */}
-        <h2 className="mb-8 text-3xl font-bold text-gray-900 lg:text-4xl text-center">
-          Our Products
-        </h2>
+        <h2 className="mb-12 text-3xl font-bold text-center">Our Products</h2>
 
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {products.map((product) => (
             <div
               key={product._id}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 p-4"
+              className="group relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
             >
+              {/* Sale Badge */}
+              <div className="absolute top-4 right-4 z-10">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-red-500 text-white text-sm font-medium">
+                 -{product.dicountPercentage}%
+                </span>
+              </div>
+
               {/* Product Image */}
-              {product.productImage && (
-                <Image
-                  src={urlFor(product.productImage).url()}
-                  alt={product.productName}
-                  className="rounded-t-lg"
-                  width={300}
-                  height={200}
-                />
-              )}
-              {/* Product Details */}
-              <div className="p-4 text-left">
-                <h3 className="text-lg font-semibold text-gray-800">
+              <div className="relative aspect-square overflow-hidden bg-gray-100">
+                {product.productImage && (
+                  <Image
+                    src={
+                      urlFor(product.productImage).url() || "/placeholder.svg"
+                    }
+                    alt={product.productName}
+                    fill
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                )}
+              </div>
+
+              {/* Product Info */}
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
                   {product.productName}
                 </h3>
-                <div className="text-md font-bold text-gray-500">
-                  {product.title}
-                  <p className="mt-2 text-xl font-bold text-[#B88E2F]">
-                    {product.price}
+                <p className="text-sm text-gray-600 mb-2">{product.title}</p>
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-lg font-bold text-gray-900">
+                    Rp {new Intl.NumberFormat().format(product.price)}
                   </p>
                 </div>
-                {/* Add to Cart / Labels */}
-                <div className="mt-4 flex justify-between items-center">
-                  <span className="bg-green-100 text-green-600 text-xs font-semibold px-2 py-1 rounded">
-                    New
-                  </span>
 
-                  <span className="bg-red-100 text-red-600 text-xs font-semibold px-2 py-1 rounded">
-                    -{product.dicountPercentage}%
-                  </span>
+                {/* Action Buttons */}
+                <div className="flex items-center justify-between border-t pt-4">
+                  <button className="px-4 py-2 bg-[#B88E2F] text-white rounded hover:bg-[#9c7829] transition-colors">
+                    Add to cart
+                  </button>
+                  <div className="flex gap-3">
+                    <button className="text-gray-600 hover:text-gray-900">
+                      <Share2 className="w-5 h-5" />
+                    </button>
+                    {/* <button className="text-gray-600 hover:text-gray-900">
+                      <Equal className="w-5 h-5" />
+                    </button> */}
+                    <button className="text-gray-600 hover:text-gray-900">
+                      <Heart className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
