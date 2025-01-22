@@ -12,12 +12,8 @@ export default function ProductSection() {
 
   useEffect(() => {
     async function getProducts() {
-      try {
-        const fetchProducts: Product[] = await client.fetch(four);
-        setProducts(fetchProducts);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
+      const fetchProducts: Product[] = await client.fetch(four);
+      setProducts(fetchProducts);
     }
     getProducts();
   }, []);
