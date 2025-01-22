@@ -1,21 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
-
 function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
-
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-md">
         <h2 className="text-2xl font-bold text-center text-gray-800">
           {isLogin ? "Login to Your Account" : "Create an Account"}
         </h2>
-
         <form>
           {!isLogin && (
             <div>
@@ -33,7 +29,6 @@ function AuthPage() {
               />
             </div>
           )}
-
           <div className="mt-4">
             <label
               htmlFor="email"
@@ -48,7 +43,6 @@ function AuthPage() {
               placeholder="Enter your email"
             />
           </div>
-
           <div className="mt-4">
             <label
               htmlFor="password"
@@ -63,7 +57,6 @@ function AuthPage() {
               placeholder="Enter your password"
             />
           </div>
-
           <button
             type="submit"
             className="w-full mt-6 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -71,7 +64,6 @@ function AuthPage() {
             {isLogin ? "Login" : "Sign Up"}
           </button>
         </form>
-
         <p className="text-sm text-center text-gray-600">
           {isLogin ? "Don't have an account?" : "Already have an account?"}
           <button
@@ -81,7 +73,6 @@ function AuthPage() {
             {isLogin ? "Sign Up" : "Login"}
           </button>
         </p>
-
         <div className="text-center mt-4">
           <Link href="/" className="text-blue-500 hover:underline">
             Back to Home
@@ -91,5 +82,4 @@ function AuthPage() {
     </div>
   );
 }
-
 export default AuthPage;
