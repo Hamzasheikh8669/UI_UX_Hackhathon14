@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <section className="relative max-w-[1440px] mx-auto flex items-center justify-end bg-white h-[700px]">
+    <section className="relative max-w-full mx-auto flex items-center justify-end bg-white h-[700px]">
       {/* Image Section */}
       <div className="absolute opacity-80 md:opacity-100 inset-0 w-full h-full">
         <Image
