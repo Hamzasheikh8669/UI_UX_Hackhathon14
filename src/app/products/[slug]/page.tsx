@@ -40,7 +40,7 @@ export default function ProductPage() {
       {/* Main Product Section */}
       <div className="min-h-screen bg-white">
         <Breadcrumb />
-        <div className="container mx-auto px-4 py-8 md:px-6">
+        <div className="container mx-auto px-5 py-8 md:px-6">
           <div className="grid gap-8 lg:grid-cols-2">
             <ProductGallery />
             <ProductInfo />
