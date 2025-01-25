@@ -1,7 +1,7 @@
 import { createClient } from '@sanity/client';
 
 const client = createClient({
-  projectId: 'huahokxm',
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
   dataset: 'production',
   useCdn: true,
   apiVersion: '2025-01-13',
