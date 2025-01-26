@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { client } from "@/sanity/lib/client";
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { client } from '@/sanity/lib/client';
+
 
 interface Product {
   _id: string;
@@ -14,7 +15,7 @@ interface Product {
   slug: string;
 }
 
-export default function Our() {
+export default function ProductSection() {
   const [visibleProductsCount, setVisibleProductsCount] = useState(4); // Initially show 4 products
   const [products, setProducts] = useState<Product[]>([]); // State for products
 
@@ -42,9 +43,7 @@ export default function Our() {
   }, []);
 
   const handleShowMore = () => {
-    setVisibleProductsCount((prevCount) =>
-      Math.min(prevCount + 4, products.length)
-    ); // Ensure it doesn't exceed total products
+    setVisibleProductsCount((prevCount) => Math.min(prevCount + 4, products.length)); // Ensure it doesn't exceed total products
   };
 
   return (
@@ -55,7 +54,9 @@ export default function Our() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-auto">
         {products.slice(0, visibleProductsCount).map((product) => (
           <Link href={`/product/${product.slug}`} key={product._id}>
-            <div className="bg-gray-50 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer">
+            <div
+              className="bg-gray-50 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
+            >
               <Image
                 src={product.productImage || "/placeholder.jpg"} // Fallback to placeholder if image is missing
                 alt={product.title || "Product"}
@@ -65,12 +66,9 @@ export default function Our() {
                 priority
               />
               <h3 className="text-xl font-bold mb-2">{product.title}</h3>
-              <p className="text-gray-600 mb-2">
-                {product.description
-                  ? product.description.split(" ").slice(0, 20).join(" ") +
-                    "..."
-                  : "No description available"}
-              </p>
+              <p className="text-gray-600 mb-2">{product.description
+                ? product.description.split(" ").slice(0, 20).join(" ") + "..."
+                : "No description available"}</p>
               <p className="text-lg font-bold mb-4">Rp {product.price}</p>
             </div>
           </Link>
