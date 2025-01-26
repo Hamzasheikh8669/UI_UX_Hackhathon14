@@ -8,7 +8,7 @@ function AuthPage() {
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-md">
+      <div className="w-full max-w-md p-7 space-y-6 bg-white shadow-md rounded-md">
         <h2 className="text-2xl font-bold text-center text-gray-800">
           {isLogin ? "Login to Your Account" : "Create an Account"}
         </h2>
