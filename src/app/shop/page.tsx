@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
+import FeatureSection from "@/components/feacturesSection";
 
 interface Product {
   id: string;
@@ -24,12 +25,15 @@ interface SanityProduct {
   productImage: string | null;
 }
 
+const ITEMS_PER_PAGE = 8; // Display 6 products per page
+
 function ProductSection() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [priceRange, setPriceRange] = useState<number>(500); // Default price range
   const [category, setCategory] = useState<string>("all"); // Default category
   const [showFilters, setShowFilters] = useState<boolean>(false); // Toggle filters visibility
+  const [currentPage, setCurrentPage] = useState<number>(1); // Current page
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -72,7 +76,15 @@ function ProductSection() {
           product.name.toLowerCase().includes(category.toLowerCase()))
     );
     setFilteredProducts(filtered);
+    setCurrentPage(1); // Reset to the first page
   };
+
+  // Calculate pagination data
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+  const paginatedProducts = filteredProducts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -158,7 +170,7 @@ function ProductSection() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
+          {paginatedProducts.map((product) => (
             <Link key={product.id} href={`/product/${product.slug}`}>
               <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer">
                 <Image
@@ -175,7 +187,29 @@ function ProductSection() {
             </Link>
           ))}
         </div>
+
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center mt-8">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-800 text-white rounded-md mr-2 disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="px-4 py-2">{`Page ${currentPage} of ${totalPages}`}</span>
+          <button
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-800 text-white rounded-md ml-2 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
       </div>
+      <FeatureSection/>
     </div>
   );
 }
