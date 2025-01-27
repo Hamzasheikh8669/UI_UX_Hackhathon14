@@ -38,11 +38,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var client_1 = require("@sanity/client");
 var client = (0, client_1.createClient)({
-    projectId: "huahokxm",
-    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
     useCdn: true,
-    apiVersion: "2025-01-13",
-    token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
+    apiVersion: '2025-01-13',
+    token: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
 });
 function uploadImageToSanity(imageUrl) {
     return __awaiter(this, void 0, void 0, function () {
@@ -62,8 +62,8 @@ function uploadImageToSanity(imageUrl) {
                 case 2:
                     buffer = _a.sent();
                     bufferImage = Buffer.from(buffer);
-                    return [4 /*yield*/, client.assets.upload("image", bufferImage, {
-                            filename: imageUrl.split("/").pop(),
+                    return [4 /*yield*/, client.assets.upload('image', bufferImage, {
+                            filename: imageUrl.split('/').pop(),
                         })];
                 case 3:
                     asset = _a.sent();
@@ -71,7 +71,7 @@ function uploadImageToSanity(imageUrl) {
                     return [2 /*return*/, asset._id];
                 case 4:
                     error_1 = _a.sent();
-                    console.error("Failed to upload image:", imageUrl, error_1);
+                    console.error('Failed to upload image:', imageUrl, error_1);
                     return [2 /*return*/, null];
                 case 5: return [2 /*return*/];
             }
@@ -90,11 +90,11 @@ function uploadProduct(product) {
                     imageId = _a.sent();
                     if (!imageId) return [3 /*break*/, 3];
                     document_1 = {
-                        _type: "product",
+                        _type: 'product',
                         title: product.title,
                         price: product.price,
                         productImage: {
-                            _type: "image",
+                            _type: 'image',
                             asset: {
                                 _ref: imageId,
                             },
@@ -115,7 +115,7 @@ function uploadProduct(product) {
                 case 4: return [3 /*break*/, 6];
                 case 5:
                     error_2 = _a.sent();
-                    console.error("Error uploading product:", error_2);
+                    console.error('Error uploading product:', error_2);
                     return [3 /*break*/, 6];
                 case 6: return [2 /*return*/];
             }
@@ -129,7 +129,7 @@ function importProducts() {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 7, , 8]);
-                    return [4 /*yield*/, fetch("https://template6-six.vercel.app/api/products")];
+                    return [4 /*yield*/, fetch('https://template6-six.vercel.app/api/products')];
                 case 1:
                     response = _a.sent();
                     if (!response.ok) {
@@ -153,7 +153,7 @@ function importProducts() {
                 case 6: return [3 /*break*/, 8];
                 case 7:
                     error_3 = _a.sent();
-                    console.error("Error fetching products:", error_3);
+                    console.error('Error fetching products:', error_3);
                     return [3 /*break*/, 8];
                 case 8: return [2 /*return*/];
             }

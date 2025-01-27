@@ -83,7 +83,7 @@ export default function ProductSection() {
           <button
             className="text-white px-6 py-3 rounded-md text-lg font-bold bg-yellow-600 hover:bg-yellow-800 transition-colors"
             onClick={handleShowMore}
-            aria-label="Show more products"
+            aria-label="Show more   ducts"
           >
             Show More
           </button>
