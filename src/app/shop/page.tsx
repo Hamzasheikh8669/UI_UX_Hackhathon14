@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
+import FeatureSection from "@/components/feacturesSection";
 
 interface Product {
   id: string;
@@ -208,6 +209,7 @@ function ProductSection() {
           </button>
         </div>
       </div>
+      <FeatureSection/>
     </div>
   );
 }
