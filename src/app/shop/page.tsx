@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
-import FeatureSection from "@/components/feacturesSection";
 
 interface Product {
   id: string;
@@ -87,11 +86,11 @@ function ProductSection() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#f5f0e8]">
       <div className="container mx-auto px-4 py-6">
         <header
           className="relative bg-cover bg-center h-64"
-          style={{ backgroundImage: "url('/shop.jpg')" }}
+          style={{ backgroundImage: "url('/images/shop.jpg')" }}
         >
           <div className="absolute inset-0 bg-opacity-50"></div>
         </header>
@@ -193,7 +192,7 @@ function ProductSection() {
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-4 py-2 bg-gray-800 text-white rounded-md mr-2 disabled:opacity-50"
+            className="px-4 py-2 bg-white text-black rounded-md mr-2 disabled:bg-gray-200 disabled:opacity-50"
           >
             Previous
           </button>
@@ -203,13 +202,12 @@ function ProductSection() {
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
             disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-gray-800 text-white rounded-md ml-2 disabled:opacity-50"
+            className="px-4 py-2 bg-white text-black rounded-md ml-2 disabled:bg-gray-200 disabled:opacity-50"
           >
             Next
           </button>
         </div>
       </div>
-      <FeatureSection/>
     </div>
   );
 }
