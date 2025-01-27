@@ -54,7 +54,7 @@ export default function ProductSection() {
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mx-auto">
         {products.slice(0, visibleProductsCount).map((product) => (
-          <Link href={`/product/${product.slug}`} key={product._id}>
+          <Link href={`/products/${product.slug}`} key={product._id}>
             <div className="bg-gray-50 p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer">
               <Image
                 src={product.productImage || "/placeholder.jpg"} // Fallback to placeholder if image is missing
