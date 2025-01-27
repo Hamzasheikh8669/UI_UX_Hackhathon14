@@ -1,15 +1,11 @@
-export interface Product {
-  _id: string;
-  productName: string;
-  _type: "product";
-  title: string;
-  description?: string;
+export interface ProductCart {
+  id: string;
+  name: string;
+  description: string;
   price: number;
-  productImage?: {
-    asset: {
-      _ref: string;
-      _type: "image";
-    };
-  };
-  dicountPercentage: number
+  productImage:number,
+  currency: string;
+  title:string,
+  // image: string; // Maybe you had an image property
+  price_id: string;
 }

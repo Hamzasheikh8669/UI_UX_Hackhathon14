@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
-import FeatureSection from "@/components/feacturesSection";
 
 interface Product {
   id: string;
@@ -91,7 +90,7 @@ function ProductSection() {
       <div className="container mx-auto px-4 py-6">
         <header
           className="relative bg-cover bg-center h-64"
-          style={{ backgroundImage: "url('/shop.jpg')" }}
+          style={{ backgroundImage: "url('/images/shop.jpg')" }}
         >
           <div className="absolute inset-0 bg-opacity-50"></div>
         </header>
@@ -209,7 +208,6 @@ function ProductSection() {
           </button>
         </div>
       </div>
-      <FeatureSection/>
     </div>
   );
 }
