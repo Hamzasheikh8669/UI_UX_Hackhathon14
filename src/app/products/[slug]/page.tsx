@@ -6,7 +6,6 @@ import { fullProduct } from "../../../../interface";
 
 import { Star, Truck } from "lucide-react";
 
-import AddToBag from "@/components/addtobag";
 import ImageGallery from "@/components/imageGallery";
 
 async function getData(slug: string): Promise<fullProduct | null> {
@@ -108,18 +107,7 @@ export default function ProductPage({
               <Truck className="w-6 h-6" />
               <span className="text-sm">2-4 Day Shipping</span>
             </div>
-            <div className="flex gap-2.5">
-              <AddToBag
-                currency="USD"
-                price={data.price}
-                description={data.description}
-                productImage={data.productImage}
-                name={data.title}
-                key={`add-to-bag-${data._id}`}
-                price_id={data.price_id}
-                id={data._id} // id={data._id}
-              />
-            </div>
+            <div className="flex gap-2.5"></div>
             <p className="mt-12 text-base text-gray-500 tracking-wide">
               {data.description
                 ? data.description.split(" ").slice(0, 50).join(" ") + "..."
