@@ -81,7 +81,7 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-8 text-xl text-gray-700 hover:text-black cursor-pointer">
           <FiUser />
           <FiSearch />
-          <FiHeart />
+          <Link href={"/wishlist"}><FiHeart /></Link>
           <div>
             {/* Cart Icon */}
             <button
@@ -92,7 +92,7 @@ const Navbar = () => {
               <FiShoppingCart className="text-2xl" />
               {/* Optional Badge for Item Count */}
               <span className="absolute -top-2 -right-5 bg-red-500 text-white text-xs rounded-full px-2 py-1">
-                3
+                2
               </span>
             </button>
 

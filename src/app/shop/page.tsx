@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
+import ShopHeader from "@/components/shop-header";
 
 interface Product {
   id: string;
@@ -86,126 +87,129 @@ function ProductSection() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f5f0e8]">
-      <div className="container mx-auto px-4 py-6">
-        <header
+    <div>
+      <ShopHeader />
+      <div className="min-h-screen ">
+        <div className="container mx-auto px-4 py-6">
+          {/* <header
           className="relative bg-cover bg-center h-64"
           style={{ backgroundImage: "url('/images/shop.jpg')" }}
         >
           <div className="absolute inset-0 bg-opacity-50"></div>
-        </header>
+        </header> */}
 
-        {/* Filter Toggle Button */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 py-8">
-          <h2 className="text-3xl font-bold text-center sm:text-left">
-            Our All Products
-          </h2>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="bg-gray-800 text-white px-4 py-2 mt-4 sm:mt-0 rounded-md hover:bg-gray-700 transition"
-          >
-            {showFilters ? "Hide Filters" : "Show Filters"}
-          </button>
-        </div>
+          {/* Filter Toggle Button */}
+          {/* <div className="flex flex-col sm:flex-row justify-between items-center mb-6 py-8">
+            <h2 className="text-3xl font-bold text-center sm:text-left">
+              Our All Products
+            </h2>
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="bg-gray-800 text-white px-4 py-2 mt-4 sm:mt-0 rounded-md hover:bg-gray-700 transition"
+            >
+              {showFilters ? "Hide Filters" : "Show Filters"}
+            </button>
+          </div> */}
 
-        {/* Filters Section */}
-        {showFilters && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Price Range Filter */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="priceRange"
-                  className="text-gray-600 font-semibold mb-2"
-                >
-                  Max Price:{" "}
-                  <span className="text-gray-800">${priceRange}</span>
-                </label>
-                <input
-                  id="priceRange"
-                  type="range"
-                  min="0"
-                  max="1000"
-                  step="50"
-                  value={priceRange}
-                  onChange={(e) => setPriceRange(Number(e.target.value))}
-                  className="w-full accent-gray-800"
-                />
-              </div>
+          {/* Filters Section */}
+          {showFilters && (
+            <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Price Range Filter */}
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="priceRange"
+                    className="text-gray-600 font-semibold mb-2"
+                  >
+                    Max Price:{" "}
+                    <span className="text-gray-800">${priceRange}</span>
+                  </label>
+                  <input
+                    id="priceRange"
+                    type="range"
+                    min="0"
+                    max="1000"
+                    step="50"
+                    value={priceRange}
+                    onChange={(e) => setPriceRange(Number(e.target.value))}
+                    className="w-full accent-gray-800"
+                  />
+                </div>
 
-              {/* Category Filter */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="category"
-                  className="text-gray-600 font-semibold mb-2"
-                >
-                  Category
-                </label>
-                <select
-                  id="category"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className="bg-gray-100 border rounded px-3 py-2"
-                >
-                  <option value="all">All</option>
-                  <option value="furniture">Furniture</option>
-                  <option value="electronics">Electronics</option>
-                  <option value="clothing">Clothing</option>
-                </select>
-              </div>
+                {/* Category Filter */}
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="category"
+                    className="text-gray-600 font-semibold mb-2"
+                  >
+                    Category
+                  </label>
+                  <select
+                    id="category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="bg-gray-100 border rounded px-3 py-2"
+                  >
+                    <option value="all">All</option>
+                    <option value="furniture">Furniture</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                  </select>
+                </div>
 
-              {/* Apply Filter Button */}
-              <div className="flex items-center sm:col-span-2 lg:col-span-1">
-                <button
-                  onClick={applyFilters}
-                  className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition w-full"
-                >
-                  Apply Filters
-                </button>
+                {/* Apply Filter Button */}
+                <div className="flex items-center sm:col-span-2 lg:col-span-1">
+                  <button
+                    onClick={applyFilters}
+                    className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition w-full"
+                  >
+                    Apply Filters
+                  </button>
+                </div>
               </div>
             </div>
+          )}
+
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {paginatedProducts.map((product) => (
+              <Link key={product.id} href={`/products/${product.slug}`}>
+                <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={500}
+                    height={500}
+                    className="w-full h-60 object-cover mb-4 rounded-lg transition-all"
+                  />
+                  <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+                  <p className="text-gray-600 mb-2">{product.description}</p>
+                  <p className="text-lg font-bold mb-4">${product.price}</p>
+                </div>
+              </Link>
+            ))}
           </div>
-        )}
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {paginatedProducts.map((product) => (
-            <Link key={product.id} href={`/product/${product.slug}`}>
-              <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  width={500}
-                  height={500}
-                  className="w-full h-60 object-cover mb-4 rounded-lg transition-all"
-                />
-                <h3 className="text-xl font-bold mb-2">{product.name}</h3>
-                <p className="text-gray-600 mb-2">{product.description}</p>
-                <p className="text-lg font-bold mb-4">${product.price}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* Pagination Controls */}
-        <div className="flex justify-center items-center mt-8">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-4 py-2 bg-white text-black rounded-md mr-2 disabled:bg-gray-200 disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <span className="px-4 py-2">{`Page ${currentPage} of ${totalPages}`}</span>
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage === totalPages}
-            className="px-4 py-2 bg-white text-black rounded-md ml-2 disabled:bg-gray-200 disabled:opacity-50"
-          >
-            Next
-          </button>
+          {/* Pagination Controls */}
+          <div className="flex justify-center items-center mt-8">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-white text-black rounded-md mr-2 disabled:bg-gray-200 disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="px-4 py-2">{`Page ${currentPage} of ${totalPages}`}</span>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-white text-black rounded-md ml-2 disabled:bg-gray-200 disabled:opacity-50"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </div>

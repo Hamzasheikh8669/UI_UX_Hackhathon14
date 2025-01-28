@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import { fullProduct } from "../../../../interface";
-
+import ImageGallery from "@/components/imageGallery";
 import { Star, Truck } from "lucide-react";
+import { useParams } from "next/navigation"; // Updated to use useParams
 
 async function getData(slug: string): Promise<fullProduct | null> {
   const query = `*[_type == 'product' && slug.current == $slug][0] {
@@ -23,28 +24,28 @@ async function getData(slug: string): Promise<fullProduct | null> {
     return data || null;
   } catch (error) {
     console.error("Failed to fetch data:", error);
-    setError("Unable to load products. Please try again later.");
-    return null;
+    throw new Error("Unable to load products. Please try again later.");
   }
 }
 
-export default function ProductPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const resolvedParams = React.use(params); // Unwrap the params Promise
-  const slug = resolvedParams.slug;
-
+export default function ProductPage() {
+  const { slug } = useParams(); // Updated to use useParams
   const [data, setData] = useState<fullProduct | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null); // Added error state
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const productData = await getData(slug);
-      setData(productData);
-      setIsLoading(false);
+      try {
+        const productData = await getData(slug);
+        setData(productData);
+      } catch (error) {
+        setError("Failed to load product. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchData();
@@ -58,6 +59,14 @@ export default function ProductPage({
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold text-gray-800">{error}</h1>
+      </div>
+    );
+  }
+
   if (!data) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -66,10 +75,17 @@ export default function ProductPage({
     );
   }
 
+  const imageUrls = data.productImage ? [data.productImage] : ["/fallback.jpg"];
+
+  const incrementQuantity = () => setQuantity((prev) => prev + 1);
+  const decrementQuantity = () =>
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
   return (
     <div className="bg-[#f5f0e8]">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <ImageGallery images={imageUrls} />
           <div className="md:py-8">
             <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
               {data.title}
@@ -101,7 +117,34 @@ export default function ProductPage({
               <Truck className="w-6 h-6" />
               <span className="text-sm">2-4 Day Shipping</span>
             </div>
-            <div className="flex gap-2.5"></div>
+
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Quantity
+              </label>
+              <div className="flex items-center border border-gray-300 rounded-lg w-fit">
+                <button
+                  onClick={decrementQuantity}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-l-lg transition-colors"
+                >
+                  -
+                </button>
+                <span className="px-4 py-2 bg-white text-gray-800">
+                  {quantity}
+                </span>
+                <button
+                  onClick={incrementQuantity}
+                  className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-600 rounded-r-lg transition-colors"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            <div className="flex gap-2.5">
+              {/* AddToBag and CheckoutNow components can be added here */}
+            </div>
+
             <p className="mt-12 text-base text-gray-500 tracking-wide">
               {data.description
                 ? data.description.split(" ").slice(0, 50).join(" ") + "..."
@@ -112,8 +155,4 @@ export default function ProductPage({
       </div>
     </div>
   );
-}
-function setError(arg0: string) {
-  console.error(`Error: ${arg0}`);
-  throw new Error("Function not implemented.");
 }
