@@ -17,7 +17,7 @@ interface Product {
 export default function ProductSection() {
   const [visibleProductsCount, setVisibleProductsCount] = useState(4);
   const [products, setProducts] = useState<Product[]>([]);
-  const [error, setError] = useState<string | null>(null); // Added error state
+  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -34,7 +34,7 @@ export default function ProductSection() {
         const sanityProducts = await client.fetch(query);
         setProducts(sanityProducts);
       } catch (error) {
-        setError("Failed to fetch products. Please try again later.");
+      console.error("Failed to fetch products. Please try again later.", error);
       }
     };
 
@@ -47,13 +47,7 @@ export default function ProductSection() {
     );
   };
 
-  if (error) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold text-gray-800">{error}</h1>
-      </div>
-    );
-  }
+ 
 
   return (
     <section className="bg-[#f5f0e8] p-4 px-10 rounded-lg">

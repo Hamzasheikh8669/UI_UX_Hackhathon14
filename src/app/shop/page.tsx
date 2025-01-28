@@ -99,7 +99,7 @@ function ProductSection() {
         </header> */}
 
           {/* Filter Toggle Button */}
-          {/* <div className="flex flex-col sm:flex-row justify-between items-center mb-6 py-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 py-8">
             <h2 className="text-3xl font-bold text-center sm:text-left">
               Our All Products
             </h2>
@@ -109,7 +109,7 @@ function ProductSection() {
             >
               {showFilters ? "Hide Filters" : "Show Filters"}
             </button>
-          </div> */}
+          </div>
 
           {/* Filters Section */}
           {showFilters && (
