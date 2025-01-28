@@ -100,7 +100,7 @@ function uploadProduct(product) {
                             },
                         },
                         tags: product.tags,
-                        dicountPercentage: product.dicountPercentage, // Typo in field name: dicountPercentage -> discountPercentage
+                        dicountPercentage: product.discountPercentage, // Typo in field name: dicountPercentage -> discountPercentage
                         description: product.description,
                         isNew: product.isNew,
                     };
