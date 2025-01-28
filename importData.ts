@@ -20,7 +20,7 @@ interface Product {
   isNew: boolean;
 }
 
-async function uploadImageToSanity(imageUrl: string) {
+async function uploadImageToSanity(imageUrl: string): Promise<string | null> {
   try {
     console.log(`Uploading image: ${imageUrl}`);
 

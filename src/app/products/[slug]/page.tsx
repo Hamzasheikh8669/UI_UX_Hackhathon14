@@ -6,8 +6,6 @@ import { fullProduct } from "../../../../interface";
 
 import { Star, Truck } from "lucide-react";
 
-import ImageGallery from "@/components/imageGallery";
-
 async function getData(slug: string): Promise<fullProduct | null> {
   const query = `*[_type == 'product' && slug.current == $slug][0] {
     _id,
@@ -68,16 +66,12 @@ export default function ProductPage({
     );
   }
 
-  const imageUrls = data.productImage ? [data.productImage] : ["/fallback.jpg"];
-
   return (
-    <div className="bg-white">
+    <div className="bg-[#f5f0e8]">
       <div className="mx-auto max-w-screen-xl px-4 md:px-8">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          <ImageGallery images={imageUrls} />
           <div className="md:py-8">
             <h2 className="text-2xl font-bold text-gray-800 lg:text-3xl">
-              {data.title}
               {data.title}
             </h2>
             <div className="mb-6 flex items-center md:mb-10 py-4">
