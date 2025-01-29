@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight, Grid, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import CategoryFilter from "../components/category-filter";
+import CategoryFilter from "./category-filter";
 
 export default function ShopHeader() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
