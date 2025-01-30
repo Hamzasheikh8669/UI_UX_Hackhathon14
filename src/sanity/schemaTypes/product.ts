@@ -18,6 +18,16 @@ export const product = defineType({
       title: "Description",
     },
     {
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "title", // Generate slug from the title field
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "productImage",
       type: "image",
       validation: (rule) => rule.required(),
