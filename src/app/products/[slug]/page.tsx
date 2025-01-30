@@ -72,7 +72,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   }, [params]);
 
   useEffect(() => {
-    if (slug) return;
+    if (!slug) return;
 
     const fetchData = async () => {
       setIsLoading(true);
