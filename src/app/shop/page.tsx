@@ -127,7 +127,7 @@ function ProductSection() {
           {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {paginatedProducts.map((product) => (
-              <Link key={product.id} href={`/product/${product.slug}`}>
+              <Link key={product.id} href={`/products/${product.slug}`}>
                 <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer">
                   <Image
                     src={product.image}
