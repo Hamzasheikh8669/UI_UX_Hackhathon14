@@ -1,6 +1,6 @@
 //src\app\confirmation\page.tsx
 import React from "react";
-import Image from "next/image";
+
 import {
   Table,
   TableCaption,

@@ -1,6 +1,5 @@
 //src\app\confirmation\page.tsx
 import React from 'react'
-import Image from 'next/image'
 import { Table, TableCaption,TableHeader,TableBody,TableFooter,TableRow,TableCell,TableHead } from '@/components/ui/table'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
