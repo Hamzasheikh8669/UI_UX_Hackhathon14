@@ -6,7 +6,7 @@ const HeroSection = () => {
       {/* Image Section */}
       <div className="absolute opacity-80 md:opacity-100 inset-0 w-full h-full">
         <Image
-          src={"/images/hero-image.jpeg"}
+          src={"/images/hero.jpeg"}
           alt="Decorative Room"
           layout="fill"
           objectFit="cover"

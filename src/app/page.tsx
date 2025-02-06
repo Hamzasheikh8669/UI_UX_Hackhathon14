@@ -1,24 +1,24 @@
+//src\app\page.tsx
 
-import HeroSection from "@/components/HeroSection"
-import BrowseSection from "@/components/BrowserSection"
-import InspirationSection from "@/components/inspiration-section"
+import BeautifulRoom from "@/components/BeautifulRoom";
 
-import GallerySection from "@/components/gallery-section"
-import ProductSection from "@/components/OurProducts";
+import Hero from "../components/HeroSection";
+import OurProducts from "@/components/OurProducts";
+
+import BrowseSection from "@/components/BrowserSection";
+import GallerySection from "@/components/gallery-section";
 
 
-
-
-export default function Home() {
+export default async function Home() {
   return (
-    <div>
-      <HeroSection />
+    <>
+      <Hero />
       <BrowseSection />
-      <ProductSection/>
-      <InspirationSection />
-      <GallerySection />
 
-
-    </div>
+      <OurProducts />
+      <BeautifulRoom />
+      <GallerySection/>
+      </>
+     
   );
 }

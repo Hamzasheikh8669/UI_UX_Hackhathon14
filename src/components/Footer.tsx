@@ -1,121 +1,107 @@
-"use client";
+//src\components\footer\Footer.tsx
 
-import { useState } from "react";
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+import { toast, Toaster } from "sonner"; // Import toast functionality
 
 export default function Footer() {
+
+
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle newsletter subscription
-    console.log("Subscribing email:", email);
-    setEmail("");
+  const handleSubscribe = () => {
+    if (email.trim() === "") {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    toast.success("Subscribed successfully!");
+    setEmail(""); // Clear the input field after subscribing
   };
 
+
+
   return (
-    <footer className="border-t border-gray-200 py-16">
-      <div className="container mx-auto px-4">
-        <div className="grid gap-x-8 gap-y-12 md:grid-cols-2 lg:grid-cols-4">
-          {/* Funiro Column */}
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold">Funiro.</h2>
-            <address className="not-italic text-base text-gray-600 leading-relaxed">
-              400 University Drive Suite 200 Coral
-              <br />
-              Gables,
+    <footer className="w-full border-t border-black/[0.17] bg-white py-12 mt-[1px]">
+      {/* Container for the footer */}
+      <div className="container px-4 md:px-10 lg:px-24 mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 mt-8">
+          
+          {/* Company Info Section */}
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold font-poppins mb-4 md:mb-7">Funiro.</h2>
+            <p className="text-gray-500 font-poppins">
+              400 University Drive Suite 200 Coral Gables,
               <br />
               FL 33134 USA
-            </address>
+            </p>
           </div>
 
-          {/* Links Column */}
-          <div className="space-y-6">
-            <h3 className="text-base font-medium text-gray-500">Links</h3>
-            <nav className="flex flex-col space-y-4">
-              <Link
-                href="/"
-                className="text-base text-gray-600 hover:text-gray-900"
-              >
+          {/* Links Section */}
+          <div className="space-y-4">
+            <h3 className="text-gray-500 font-poppins font-medium mb-4 md:mb-7">Links</h3>
+            <nav className="flex flex-col space-y-4 md:space-y-6">
+              <Link href="#" className="text-black font-poppins font-medium hover:text-gray-700">
                 Home
               </Link>
-              <Link
-                href="/shop"
-                className="text-base text-gray-600 hover:text-gray-900"
-              >
+              <Link href="/shop" className="text-black font-poppins font-medium hover:text-gray-700">
                 Shop
               </Link>
-              <Link
-                href="/blog"
-                className="text-base text-gray-600 hover:text-gray-900"
-              >
+              <Link href="/blog" className="text-black font-poppins font-medium hover:text-gray-700">
                 Blog
               </Link>
-              <Link
-                href="/contact"
-                className="text-base text-gray-600 hover:text-gray-900"
-              >
+              <Link href="/contact" className="text-black font-poppins font-medium hover:text-gray-700">
                 Contact
               </Link>
             </nav>
           </div>
 
-          {/* Help Column */}
-          <div className="space-y-6">
-            <h3 className="text-base font-medium text-gray-500">Help</h3>
-            <nav className="flex flex-col space-y-4">
-              <Link
-                href="#"
-                className="text-base text-gray-600 hover:text-gray-900"
-              >
+          {/* Help Section */}
+          <div className="space-y-4">
+            <h3 className="text-gray-500 font-poppins font-medium mb-4 md:mb-7">Help</h3>
+            <nav className="flex flex-col space-y-4 md:space-y-6">
+              <a href="#" className="text-black font-poppins font-medium hover:text-gray-700">
                 Payment Options
-              </Link>
-              <Link
-                href="#"
-                className="text-base text-gray-600 hover:text-gray-900"
-              >
+              </a>
+              <a href="#" className="text-black font-poppins font-medium hover:text-gray-700">
                 Returns
-              </Link>
-              <Link
-                href="#"
-                className="text-base text-gray-600 hover:text-gray-900"
-              >
+              </a>
+              <a href="#" className="text-black font-poppins font-medium hover:text-gray-700">
                 Privacy Policies
-              </Link>
+              </a>
             </nav>
           </div>
 
-          {/* Newsletter Column */}
-          <div className="space-y-6">
-            <h3 className="text-base font-medium text-gray-500">Newsletter</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="flex flex-col space-y-2">
+          {/* Newsletter Section */}
+          <div className="space-y-4">
+            <h3 className="text-gray-500 font-poppins font-medium mb-4 md:mb-7">Newsletter</h3>
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
+              {/* Email Input Field */}
+              <div className="flex-1">
                 <input
                   type="email"
-                  placeholder="Enter Your Email Address"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="border-b border-gray-300 pb-2 text-base placeholder-gray-500 focus:border-gray-900 focus:outline-none"
-                  required
+            onChange={(e) => setEmail(e.target.value)} 
+                  placeholder="Enter Your Email Address"
+                  className="w-full border-b border-black pb-1 text-sm font-poppins text-gray-500 focus:outline-none"
                 />
-                <button
-                  type="submit"
-                  className="self-start text-base font-medium text-gray-900 hover:text-gray-700"
-                >
-                  SUBSCRIBE
-                </button>
               </div>
-            </form>
+              {/* Subscribe Button */}
+              <button onClick={handleSubscribe} className="border-b border-black pb-1 text-sm font-poppins font-medium">
+                SUBSCRIBE
+              </button>
+            </div>
           </div>
+          <Toaster richColors />
         </div>
 
-        {/* Copyright */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <p className="text-base text-gray-600">
-            2023 furino. All rights reserved
-          </p>
+        {/* Bottom Section (Copyright) */}
+        <div className="border-t border-[#D9D9D9] pt-6 text-center">
+          <p className="text-black font-poppins">2023 Funiro. All rights reserved</p>
         </div>
       </div>
+      
     </footer>
   );
 }

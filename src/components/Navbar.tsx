@@ -1,47 +1,29 @@
-"use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import { FiUser, FiSearch, FiHeart, FiShoppingCart } from "react-icons/fi";
-import { AiOutlineMenu } from "react-icons/ai";
-import { GrFormClose } from "react-icons/gr";
-import ShoppingCart from "@/components/shopping-cart";
-import Link from "next/link";
-import Image from "next/image";
 
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showCart, setShowCart] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const cartRef = useRef<HTMLDivElement>(null);
+'use client'
+import { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Search, Heart, ShoppingCart, AlignLeft } from 'lucide-react'
+import { useAtom } from 'jotai'
+import { searchName } from '../app/globalState/globalState'
+import {  ClerkProvider, SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
+import { Button } from './ui/button'
 
-  // Toggle menu
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [value, setValue] = useAtom(searchName)
 
-  // Close menu or cart when clicking outside
-  useEffect(() => {
-    const handleOutsideClick = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsMenuOpen(false);
-      }
-      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
-        setShowCart(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, []);
 
   return (
-    <nav className="bg-white shadow-md">
-      <div className="container mx-auto px-4 flex justify-between items-center py-4">
+    <nav className="relative w-full bg-white z-50">
+      {/* Main container for Navbar */}
+      <div className="max-w-[1286px] mx-auto px-4 lg:ml-[60px] 
+         sm:px-0 ml-[51px] sm:ml-0 flex items-center justify-between h-[41px] mt-[29px]  ">
+        
         {/* Logo Section */}
-        <div className=" ">
-          <div className="text-2xl font-bold text-black flex items-center  ">
+        <Link href="/" className="flex items-center">
+        <div className="text-2xl font-bold text-black flex items-center  ">
             <Image
               src="/images/logo.png"
               width={50}
@@ -51,156 +33,131 @@ const Navbar = () => {
             />
             <span>Furniro</span>
           </div>
+          </Link>
+        {/* Navigation Links */}
+        <div className="hidden md:flex items-center gap-8 ">
+          <Link href="/" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors">Home</Link>
+          <Link href="/shop" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors">Shop</Link>
+          <Link href="/blog" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors">Blog</Link>
+          <Link href="/contact" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors">Contact</Link>
         </div>
-
-        {/* Desktop Menu Items */}
-        <ul className="hidden md:flex space-x-6 text-sm font-medium text-gray-700 text-[16px] gap-[20px] ">
-          <li className="hover:text-black cursor-pointer ">
-            <Link href="/" className="text-[18px]">
-              Home
-            </Link>
-          </li>
-          <li className="hover:text-black cursor-pointer ">
-            <Link href="/shop" className="text-[18px]">
-              Shop
-            </Link>
-          </li>
-          <li className="hover:text-black cursor-pointer ">
-            <Link href="/blog" className="text-[18px]">
-              Blog
-            </Link>
-          </li>
-          <li className="hover:text-black cursor-pointer ">
-            <Link href="/contact" className="text-[18px]">
-              Contact
-            </Link>
-          </li>
-        </ul>
 
         {/* Icons Section */}
-        <div className="hidden md:flex items-center space-x-8 text-xl text-gray-700 hover:text-black cursor-pointer">
-          <FiUser />
-          <FiSearch />
-          <Link href={"/wishlist"}><FiHeart /></Link>
-          <div>
-            {/* Cart Icon */}
-            <button
-              onClick={() => setShowCart((prev) => !prev)}
-              className="relative text-gray-900"
-              aria-label="Toggle shopping cart"
-            >
-              <FiShoppingCart className="text-2xl" />
-              {/* Optional Badge for Item Count */}
-              <span className="absolute -top-2 -right-5 bg-red-500 text-white text-xs rounded-full px-2 py-1">
-                2
-              </span>
-            </button>
-
-            {/* Conditionally Render the ShoppingCart Component */}
-            {showCart && (
-              <div
-                ref={cartRef}
-                className="top-0 right-0 w-80 h-full bg-white shadow-lg z-50"
-              >
-                <ShoppingCart />
-                <button
-                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-900"
-                  onClick={() => setShowCart(false)}
-                >
-                  <GrFormClose className="text-2xl" />
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center">
-          <button
-            type="button"
-            onClick={toggleMenu}
-            className="text-gray-700 focus:outline-none hover:text-black"
-          >
-            {isMenuOpen ? (
-              <GrFormClose size={24} />
-            ) : (
-              <AiOutlineMenu size={24} />
-            )}
+        <div className="hidden sm:flex md:items-center gap-6 sm:pr-10">
+          
+        <input 
+            type="search" 
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Search..." 
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+          />
+          <button aria-label="Search" className="p-2 hover:bg-black/5 rounded-full transition-colors">
+            <Search className="w-6 h-6" />
           </button>
+
+
+
+
+
+
+          
+          <Link href={"/wishlist"}>
+           <button aria-label="Wishlist" className="p-2 hover:bg-black/5 rounded-full transition-colors">
+           <Heart className="w-6 h-6" />
+           </button>
+        
+           </Link>
+          <Link href="/cart">
+          <button aria-label="Shopping Cart" className="p-2 hover:bg-black/5 rounded-full transition-colors">
+            <ShoppingCart className="w-6 h-6" />
+          </button>
+          </Link>
+
+<ClerkProvider>
+          {/* User Account Section */}
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton
+              appearance={{
+                elements: {
+                  rootBox: "custom-user-button",
+                  avatarBox: "custom-avatar",
+                  popoverCard: "custom-popover-card",
+                },
+              }}
+            />
+          </SignedIn>
+
+          </ClerkProvider>
+
+
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div ref={menuRef} className="md:hidden bg-white shadow-lg">
-          <ul className="space-y-4 py-4 px-4 text-sm font-medium text-gray-700">
-            <li className="hover:text-black cursor-pointer">
-              <Link href="/">Home</Link>
-            </li>
-            <li className="hover:text-black cursor-pointer">
-              <Link href="/shop">Shop</Link>
-            </li>
-            <li className="hover:text-black cursor-pointer">
-              <Link href="/blog">Blog</Link>
-            </li>
-            <li className="hover:text-black cursor-pointer">
-              <Link href="/contact">Contact</Link>
-            </li>
-          </ul>
-          <div className="flex justify-center space-x-6 py-4 text-xl text-gray-700 hover:text-black">
-            <FiUser />
-            <FiSearch />
-            <FiHeart />
-            <div>
-              {/* Cart Icon */}
-              <button
-                onClick={() => setShowCart((prev) => !prev)}
-                className="relative text-gray-900"
-                aria-label="Toggle shopping cart"
-              >
-                <FiShoppingCart className="text-2xl" />
-                {/* Optional Badge for Item Count */}
-                <span className="absolute -top-2 -right-5 bg-red-500 text-white text-xs rounded-full px-2 py-1">
-                  3
-                </span>
-              </button>
+      {/* Mobile View - Hamburger Menu */}
+      <div className="sm:hidden  flex items-center justify-between px-4 py-0 ">
+        <Button variant={"no"}  onClick={() => setMenuOpen(!menuOpen)}>
+      <AlignLeft color='#d1b238' style={{ width: 30, height: 30 }}/>
+      </Button>
+       
+      </div>
 
-              {/* Conditionally Render the ShoppingCart Component */}
-              {showCart && (
-                <div
-                  ref={cartRef}
-                  className=" top-0 right-0 w-80 h-full bg-white shadow-lg z-50"
-                >
-                  <ShoppingCart />
-                  <button
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-900"
-                    onClick={() => setShowCart(false)}
-                  >
-                    <GrFormClose className="text-2xl" />
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+      {/* Sliding Mobile Menu */}
+      <div
+        className={`absolute top-[70px] left-0 w-full bg-white shadow-lg z-10 transform transition-transform duration-300 ${
+          menuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col items-center gap-4 py-4 bg-[#fff3e3]">
+          <Link href="/" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors" onClick={() => setMenuOpen(false)}>Home</Link>
+          <Link href="/shop" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors" onClick={() => setMenuOpen(false)}>Shop</Link>
+          <Link href="/blog" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors" onClick={() => setMenuOpen(false)}>Blog</Link>
+          <Link href="/contact" className="text-base font-medium font-poppins text-black hover:text-black/70 transition-colors" onClick={() => setMenuOpen(false)}>Contact</Link>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
-            <button
-              type="button"
-              onClick={toggleMenu}
-              className="text-gray-700 focus:outline-none hover:text-black"
-            >
-              {isMenuOpen ? (
-                <GrFormClose size={24} />
-              ) : (
-                <AiOutlineMenu size={24} />
-              )}
-            </button>
-          </div>
+
+
+
+          <div className=" mt-2 sm:flex md:items-center gap-6 sm:pr-10">
+          
+          <button aria-label="Search" onClick={() => setMenuOpen(false)} className="p-2 hover:bg-black/5 rounded-full transition-colors">
+            <Search className="w-6 h-6" />
+          </button>
+         <Link href={"/wishlist"}>
+         <button aria-label="Wishlist" onClick={() => setMenuOpen(false)} className="p-2 hover:bg-black/5 rounded-full transition-colors">
+            <Heart className="w-6 h-6" />
+          </button>
+         
+         </Link>
+          <Link href="/cart">
+          <button aria-label="Shopping Cart" onClick={() => setMenuOpen(false)} className="p-2 hover:bg-black/5 rounded-full transition-colors">
+            <ShoppingCart className="w-6 h-6" />
+          </button>
+          </Link>
+
+           {/* Add UserButton in Mobile View */}
+           <ClerkProvider>
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton
+                  appearance={{
+                    elements: {
+                      rootBox: 'custom-user-button',
+                      avatarBox: 'custom-avatar',
+                      popoverCard: 'custom-popover-card',
+                    },
+                  }}
+                />
+              </SignedIn>
+            </ClerkProvider>
         </div>
-      )}
+
+        </div>
+      </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
