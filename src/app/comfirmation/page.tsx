@@ -3,6 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { Table, TableCaption,TableHeader,TableBody,TableFooter,TableRow,TableCell,TableHead } from '@/components/ui/table'
 import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
 
 
 
@@ -15,14 +16,14 @@ const{ productName, totalItems,totalPrice,subTotal}=await searchParams
   return (
     <div className='min-h-screen bg-white px-4 md:px-8 lg:px-12'>
 
-<div className="bg-[url('/blogMainImage.png')] bg-cover bg-center py-16 mb-12">
+<div className="bg-[url('/images/shop.png')] bg-cover bg-center py-16 mb-12">
         <div className="container text-center">
           <div className="inline-block w-16 h-16 bg-[url('/logo1.png')] mb-4" />
           <h1 className="text-3xl md:text-4xl font-medium mb-4 font-poppins">Confirmation</h1>
           <div className="flex items-center justify-center gap-2 text-sm">
             <Link href="/" className="hover:underline">Home</Link>
             <span>
-              <Image src="/rightA.png" width={20} height={20} alt="arrow" />
+         <ChevronRight/>
             </span>
             <span>Confirmation</span>
           </div>

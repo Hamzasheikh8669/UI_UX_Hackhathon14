@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
+
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Shopbottombar from "../../components/shopBottombar";
