@@ -2,7 +2,8 @@
 
 "use client";
 
-import Shopbottombar from "../../components/shopBottombar";
+
+import Features from "@/components/features";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -159,8 +160,8 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Bottom Bar */}
-      <Shopbottombar />
-    </div>
+    <Features />  
+
+      </div>
   );
 }

@@ -1,18 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight, Grid, List } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import CategoryFilter from "./category-filter";
+import { ChevronRight, } from "lucide-react";
+
+import Features from "./features";
 
 export default function ShopHeader() {
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const totalItems = 32;
-  const itemsPerPage = 16;
-  const currentPage = 1;
-
+ 
   return (
     <div>
       {/* Hero Section with Breadcrumb */}
@@ -40,52 +35,7 @@ export default function ShopHeader() {
         </div>
       </div>
 
-      {/* Filter Bar */}
-      <div className="border-b bg-[#F9F1E7]">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            {/* Left Section: Filter and View Mode */}
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <CategoryFilter />
-              </div>
-
-              <div className="hidden sm:flex items-center space-x-2">
-                <Button
-                  variant={viewMode === "grid" ? "default" : "ghost"}
-                  onClick={() => setViewMode("grid")}
-                >
-                  <Grid className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant={viewMode === "list" ? "default" : "ghost"}
-                  onClick={() => setViewMode("list")}
-                >
-                  <List className="h-4 w-4" />
-                </Button>
-              </div>
-              <p className="text-sm text-gray-600">
-                Showing {(currentPage - 1) * itemsPerPage + 1}-
-                {Math.min(currentPage * itemsPerPage, totalItems)} of{" "}
-                {totalItems} results
-              </p>
-            </div>
-
-            {/* Right Section: Pagination and Sorting */}
-            <div className="flex items-center space-x-4">
-              {/* Items Per Page Selector */}
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">Show</span>
-              </div>
-
-              {/* Sorting Selector */}
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600">Sort by</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Features />
     </div>
   );
 }
