@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Search, Heart, ShoppingCart, AlignLeft } from "lucide-react";
 import { useAtom } from "jotai";
-import { searchName } from "../app/globalState/globalState";
+import { searchName } from "../globalState/globalState";
 import { UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 

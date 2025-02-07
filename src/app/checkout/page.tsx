@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Suspense, useState } from "react";
@@ -19,9 +18,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import Shopbottombar from "../../components/shopBottombar";
-import { postRequest } from "../../app/services/shipApi";
+import { postRequest } from "../../services/shipApi";
 import JsonResponseViewer from "@/components/JsonResponseViewer";
+import FeatureSection from "@/components/feacturesSection";
 
 // CheckoutFormContent Component
 const CheckoutFormContent = () => {
@@ -83,7 +82,7 @@ const CheckoutFormContent = () => {
               Home
             </Link>
             <span>
-            <ChevronRight />
+              <ChevronRight />
             </span>
             <span>Checkout</span>
           </div>
@@ -400,7 +399,7 @@ const CheckoutFormContent = () => {
         </div>
       </div>
 
-      <Shopbottombar />
+      <FeatureSection />
     </div>
   );
 };

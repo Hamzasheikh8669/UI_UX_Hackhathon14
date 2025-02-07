@@ -1,73 +1,78 @@
+"use client";
 
-"use client"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import Link from "next/link";
+import Image from "next/image";
+import { Heart, Share2, ArrowRightLeft } from "lucide-react";
+import { ProductFilterBar } from "@/components/filterbar";
+import { useAtom } from "jotai";
+import { searchName } from "@/globalState/globalState";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import Link from "next/link"
-import Image from "next/image"
-import { Heart, Share2, ArrowRightLeft } from "lucide-react"
-import { ProductFilterBar } from "@/components/filterbar"
-import Shopbottombar from "@/components/shopBottombar"
-import { useAtom } from "jotai"
-import { searchName } from "../app/globalState/globalState"
 
 interface ProductSection {
-  title: string
-  description: string
-  isNew: boolean
-  tags: string[]
-  price: number
-  productImage: string
-  dicountPercentage: number
-  _id: string
+  title: string;
+  description: string;
+  isNew: boolean;
+  tags: string[];
+  price: number;
+  productImage: string;
+  dicountPercentage: number;
+  _id: string;
 }
 
 interface ProductGridClientProps {
-  initialCards: ProductSection[]
+  initialCards: ProductSection[];
 }
 
-export default function ProductGridClient({ initialCards }: ProductGridClientProps) {
-  const [cards, setCards] = useState<ProductSection[]>(initialCards)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [show, setShow] = useState(8)
-  const [search] = useAtom(searchName)
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+export default function ProductGridClient({
+  initialCards,
+}: ProductGridClientProps) {
+  const [cards, setCards] = useState<ProductSection[]>(initialCards);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [show, setShow] = useState(8);
+  const [search] = useAtom(searchName);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const itemsPerPage = show
-  const startIndex = (currentPage - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const paginatedCards = cards.slice(startIndex, endIndex)
-  const totalPages = Math.ceil(cards.length / itemsPerPage)
+  const itemsPerPage = show;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedCards = cards.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(cards.length / itemsPerPage);
 
   useEffect(() => {
-    setCurrentPage(1)
-  }, [show])
+    setCurrentPage(1);
+  }, [show]);
 
   useEffect(() => {
     if (search) {
-      const filteredCards = initialCards.filter((card) => card.title.toLowerCase().includes(search.toLowerCase()))
-      setCards(filteredCards)
-      setCurrentPage(1)
+      const filteredCards = initialCards.filter((card) =>
+        card.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setCards(filteredCards);
+      setCurrentPage(1);
     } else {
-      setCards(initialCards)
+      setCards(initialCards);
     }
-  }, [search, initialCards])
+  }, [search, initialCards]);
 
   return (
     <>
-      <ProductFilterBar
-        show={show}
-        setShow={setShow}
-        viewMode={viewMode}
-        setViewMode={setViewMode}
-        totalResults={cards.length}
-      />
-
+      
+        <ProductFilterBar
+          show={show}
+          setShow={setShow}
+          viewMode={viewMode}
+          setViewMode={setViewMode}
+          totalResults={cards.length}
+        />
       <div className="container mx-auto p-4 md:p-6">
         <div
           className={`grid gap-6 ${
-            viewMode === "grid" ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" : "grid-cols-1"
+            viewMode === "grid"
+              ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+              : "grid-cols-1"
           }`}
         >
           {paginatedCards.map((item: ProductSection) => (
@@ -75,18 +80,21 @@ export default function ProductGridClient({ initialCards }: ProductGridClientPro
               key={item._id}
               className={`group relative overflow-hidden shadow-md ${viewMode === "list" ? "flex" : ""}`}
             >
-              <div className={`relative ${viewMode === "grid" ? "aspect-square" : "w-1/3"}`}>
+              <div
+                className={`relative ${viewMode === "grid" ? "aspect-square" : "w-1/3"}`}
+              >
                 <Image
                   src={item.productImage || "/placeholder.svg"}
                   alt={item.title}
-                  
                   fill
                   className="object-center transition-transform group-hover:scale-105"
                 />
               </div>
 
               {item.isNew && (
-                <div className="absolute left-4 top-4 rounded-full px-3 py-2 text-sm text-white bg-green-500">New</div>
+                <div className="absolute left-4 top-4 rounded-full px-3 py-2 text-sm text-white bg-green-500">
+                  New
+                </div>
               )}
 
               {item.dicountPercentage > 0 && (
@@ -119,18 +127,23 @@ export default function ProductGridClient({ initialCards }: ProductGridClientPro
               <div className={viewMode === "list" ? "flex-grow" : ""}>
                 <CardContent className="p-4">
                   <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <p className="text-sm text-gray-500">{item.description.slice(0, 100)}...</p>
+                  <p className="text-sm text-gray-500">
+                    {item.description.slice(0, 100)}...
+                  </p>
                 </CardContent>
                 <CardFooter className="flex flex-col items-start gap-4 p-4">
-                {item.tags && (
-
-
-<div className="  px-3 py-1 text-sm text-white flex flex-wrap gap-2">
-  {item.tags.map((tag, index) => (
-    <span key={index} className="bg-gray-200 text-black px-2 rounded-md  py-1 ">{tag}</span>
-  ))}
-</div>
-)}
+                  {item.tags && (
+                    <div className="  px-3 py-1 text-sm text-white flex flex-wrap gap-2">
+                      {item.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="bg-gray-200 text-black px-2 rounded-md  py-1 "
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                   <div className="flex items-center gap-2">
                     <span className="text-lg font-bold">Rs. {item.price}</span>
                   </div>
@@ -154,15 +167,15 @@ export default function ProductGridClient({ initialCards }: ProductGridClientPro
           <Button
             variant="outline"
             className="w-20"
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
             disabled={currentPage === totalPages}
           >
             Next
           </Button>
         </div>
       </div>
-
-      <Shopbottombar />
     </>
-  )
+  );
 }

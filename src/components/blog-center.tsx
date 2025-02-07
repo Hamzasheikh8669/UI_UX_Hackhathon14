@@ -1,6 +1,6 @@
 // //src\components\blogCenter\BlogCenter.tsx
 
-import { Blog, fetchBlogs } from "../app/services/data";
+import { Blog, fetchBlogs } from "../services/data";
 import Image from "next/image";
 
 const BlogCenter = async () => {

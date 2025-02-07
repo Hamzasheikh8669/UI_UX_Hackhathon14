@@ -1,18 +1,21 @@
-
 "use client";
+
 import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
-import { ChevronRight, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import Shopbottombar from "../../components/shopBottombar";
-// import RelatedProducts from "@/components/Relatedproducts";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import FeatureSection from "@/components/feacturesSection";
 import Link from "next/link";
+
 import { client } from "@/sanity/lib/client";
-
-
 interface ProductSection {
   title: string;
   description: string;
@@ -23,7 +26,6 @@ interface ProductSection {
   discountPercentage: number;
   _id: string;
 }
-
 interface IProduct {
   id: string;
   productName: string;
@@ -73,39 +75,30 @@ function CartContent() {
     }
   }, [searchParams, router]);
 
-  const [cards,setCards]=useState<ProductSection[]>([])
-  
-      useEffect(()=>{
-  
-          const fetchData1 = async () => {
-  
-            
-            const res:ProductSection[]=await client.fetch(`
-              
-              *[_type=='product'][]{
-              'productImage': productImage.asset->url,
-              description,
-              discountPercentage,
-              tags,
-              isNew,
-              title,
-              price,
-              _id
-            }
-            `);
-  
-            
-            setCards(res)
-            
+  const [cards, setCards] = useState<ProductSection[]>([]);
+
+  useEffect(() => {
+    const fetchData1 = async () => {
+      const res: ProductSection[] = await client.fetch(`
           
-            
-  
-          }
-  
-          fetchData1();
-  
-      },[])
-  
+          *[_type=='product'][]{
+          'productImage': productImage.asset->url,
+          description,
+          discountPercentage,
+          tags,
+          isNew,
+          title,
+          price,
+          _id
+        }
+        `);
+
+      setCards(res);
+    };
+
+    fetchData1();
+  }, []);
+
   function handleRemoveItem(index: number) {
     const removedCard = [...cartItem];
     removedCard.splice(index, 1);
@@ -136,9 +129,7 @@ function CartContent() {
             <Link href="/" className="hover:underline">
               Home
             </Link>
-            <span>
-             <ChevronRight/>
-            </span>
+            <ChevronRight className="h-4 w-4 text-gray-400" />
             <span>Cart</span>
           </div>
         </div>
@@ -215,11 +206,10 @@ function CartContent() {
                           (100 - item.dicountPercentage)) /
                           100}
                       </td>
-
                       {/* Action */}
                       <td className="border border-[#f9f1e7]">
                         <Button
-                          variant={"ghost"}
+                          variant={"no"}
                           onClick={() => handleRemoveItem(index)}
                         >
                           <Trash size={28} fill="#b88e2f" />
@@ -245,7 +235,6 @@ function CartContent() {
                 Cart Totals
               </h1>
             </div>
-
             <div className="text-[14px] sm:text-[16px] leading-[20px] sm:leading-[24px] flex items-center justify-between w-full mb-[20px] sm:mb-[31px]">
               <p>Total Items:</p>
               <p className="text-[#a5a4ae]">{totalItems}</p>
@@ -263,7 +252,6 @@ function CartContent() {
                 Rs. {totalPrice}
               </p>
             </div>
-
             <div className="mt-[30px] sm:mt-[42px] mb-[50px] sm:mb-[80px]">
               <Link
                 href={`/checkout?totalItems=${totalItems}&totalPrice=${totalPrice}&subTotal=${subTotal}&productName=${cartItem.map((item) => item.productName).join(",")}`}
@@ -281,69 +269,62 @@ function CartContent() {
       </div>
 
       {/* related products section */}
-      
-
 
       <section className="py-12">
-      <div className="container px-4 md:px-6">
-        <h2 className="text-3xl font-bold text-center mb-10">Related Products </h2>
-      </div>
-
-      <Carousel
-      
-      opts={{
-        align: "start",
-        loop: false,
-      }}
-      
-      
-      className="w-[1236px] m-auto ">
-        <CarouselContent className="flex overflow-x-auto space-x-4">
-
-          {(cards.reverse()).map((item:ProductSection ,index:number) =>{
-            
-            return(
-<CarouselItem key={index} className="flex-none w-[285px]">
-              <div className="bg-white border border-gray-200 rounded-lg shadow">
-                <div className="relative w-full h-[301px] overflow-hidden rounded-t-lg">
-                  <Image
-                    src={item.productImage}
-                    alt={item.title}
-                    fill
-                    className="object-center"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-900">{item.title}</h3>
-                  <p className="text-sm text-gray-500">{item.description.slice(0,20)}...</p>
-                  <div className="mt-2 flex items-center gap-2">
-                    <span className="text-sm font-medium text-gray-900">
-                      Rs.{item.price}
-                    </span>
-                    
-                  </div>
-                </div>
-              </div>
-            </CarouselItem>
-
-            )} )}
-        </CarouselContent>
-      </Carousel>
-
-      <div className="flex justify-center mt-10">
-        <Link
-          href="/shop"
-          className="inline-flex items-center justify-center px-8 py-3 border border-[#b88e2f] hover:bg-[#b88e2f] hover:text-white transition-colors text-[#b88e2f]"
+        <div className="container px-4 md:px-6">
+          <h2 className="text-3xl font-bold text-center mb-10">
+            Related Products{" "}
+          </h2>
+        </div>
+        <Carousel
+          opts={{
+            align: "start",
+            loop: false,
+          }}
+          className="w-[1236px] m-auto "
         >
-          Search More
-        </Link>
-      </div>
-    </section>
-
-
-
-
-      <Shopbottombar />
+          <CarouselContent className="flex overflow-x-auto space-x-4">
+            {cards.reverse().map((item: ProductSection, index: number) => {
+              return (
+                <CarouselItem key={index} className="flex-none w-[285px]">
+                  <div className="bg-white border border-gray-200 rounded-lg shadow">
+                    <div className="relative w-full h-[301px] overflow-hidden rounded-t-lg">
+                      <Image
+                        src={item.productImage}
+                        alt={item.title}
+                        fill
+                        className="object-center"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {item.description.slice(0, 20)}...
+                      </p>
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className="text-sm font-medium text-gray-900">
+                          Rs.{item.price}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CarouselItem>
+              );
+            })}
+          </CarouselContent>
+        </Carousel>
+        <div className="flex justify-center mt-10">
+          <Link
+            href="/shop"
+            className="inline-flex items-center justify-center px-8 py-3 border border-[#b88e2f] hover:bg-[#b88e2f] hover:text-white transition-colors text-[#b88e2f]"
+          >
+            Search More
+          </Link>
+        </div>
+      </section>
+      <FeatureSection />
     </>
   );
 }
@@ -352,7 +333,6 @@ export default function Cart() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <CartContent />
-      {/* <RelatedProducts /> */}
     </Suspense>
   );
 }

@@ -1,6 +1,6 @@
 
 import { Suspense } from "react"
-import { getProducts } from "../../app/services/getProducts"
+import { getProducts } from "../../services/getProducts"
 import ProductGridClient from "../../components/productGridClient"
 import FeatureSection from "@/components/feacturesSection";
 import ShopHeader from "@/components/shop-header"

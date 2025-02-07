@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRightLeft, Heart, Share2 } from "lucide-react";
 
 import { Button } from "./ui/button";
-import { fetchProducts } from "../app/services/data";
+import { fetchProducts } from "../services/data";
 
 interface ProductSection {
   title: string;

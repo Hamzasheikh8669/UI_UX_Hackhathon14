@@ -1,118 +1,115 @@
+"use client";
 
+import { useEffect, useState } from "react";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { X } from "lucide-react";
 
-'use client'
-
-import { useEffect, useState } from 'react'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { X } from 'lucide-react'
-
-
-import { Toaster, toast } from 'sonner';
+import { Toaster, toast } from "sonner";
 // import { createComment, deleteComment, myFetch, updateComment } from '@/services/create'
 
+import ReviewCard from "./ReviewCard";
+import {
+  createComment,
+  deleteComment,
+  myFetch,
+  updateComment,
+} from "../services/create";
 
-import ReviewCard from './ReviewCard'
-import { createComment, deleteComment, myFetch, updateComment } from '../app/services/create'
-
-
-
-export interface Comment { _id: string,  name: string; email: string; message: string, paramsId: number}
+export interface Comment {
+  _id: string;
+  name: string;
+  email: string;
+  message: string;
+  paramsId: number;
+}
 
 export default function PostCreator({ blog_id }: { blog_id: number }) {
+  const [name, SetName] = useState("");
+  const [email, SetEmail] = useState("");
+  const [message, SetMessage] = useState("");
+  const [cmtArray, setCmtArray] = useState<Comment[]>([]);
+  const [btnName, setBtnName] = useState("Post");
+  const [findCard, setFindCard] = useState<Comment | null>(null);
 
+  // ------------------------------------------------create
+  const postComment = async () => {
+    const cardFound = cmtArray.find((comment) => comment._id === findCard?._id);
 
-  const [name, SetName] = useState("")
-  const [email, SetEmail] = useState("")
-  const [message, SetMessage] = useState("")
-  const [cmtArray, setCmtArray] = useState<Comment[]>([])
-  const [btnName, setBtnName] = useState("Post")
-  const [findCard, setFindCard] = useState<Comment | null>(null)
-
-// ------------------------------------------------create 
-const postComment = async () => {
-  const cardFound = cmtArray.find((comment) => comment._id === findCard?._id);
-
-  if (cardFound) {
-    const UpdatedComment = { name, email, message, paramsId: Number(blog_id) };
-    const res = await updateComment(cardFound._id, UpdatedComment)
-    setCmtArray(res);
-    SetName('');
-    SetEmail('');
-    SetMessage('');
-    handleClose();
-    setBtnName('Post')
-    setFindCard(null)
-    toast.success('Comment updated successfully');
-  }
-  
-  else if (name && email && message && !cardFound) {
-    const newComment = { name, email, message, paramsId: Number(blog_id) };
-    try {
-      const res = await createComment(newComment);
+    if (cardFound) {
+      const UpdatedComment = {
+        name,
+        email,
+        message,
+        paramsId: Number(blog_id),
+      };
+      const res = await updateComment(cardFound._id, UpdatedComment);
       setCmtArray(res);
-      console.log("🚀",res);
-      SetName('');
-      SetEmail('');
-      SetMessage('');
+      SetName("");
+      SetEmail("");
+      SetMessage("");
       handleClose();
-      toast.success('Comment posted successfully');
-      
-    } catch (error) {
-      console.error('Error posting comment:', error);
-    }
-  } else {
-    toast.error('Please fill all the fields');
-  }
-};
-
-
-// ------------------------------------------------fetch
-useEffect(() => {
-  const fetchComments = async () => {
-    try {
-      const comments = await myFetch(blog_id);
-      setCmtArray(comments);
-      console.log("💡",comments);
-      
-    } catch (error) {
-      console.error('Error fetching comments:', error);
+      setBtnName("Post");
+      setFindCard(null);
+      toast.success("Comment updated successfully");
+    } else if (name && email && message && !cardFound) {
+      const newComment = { name, email, message, paramsId: Number(blog_id) };
+      try {
+        const res = await createComment(newComment);
+        setCmtArray(res);
+        console.log("🚀", res);
+        SetName("");
+        SetEmail("");
+        SetMessage("");
+        handleClose();
+        toast.success("Comment posted successfully");
+      } catch (error) {
+        console.error("Error posting comment:", error);
+      }
+    } else {
+      toast.error("Please fill all the fields");
     }
   };
-  fetchComments();
-},[blog_id]);
 
+  // ------------------------------------------------fetch
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const comments = await myFetch(blog_id);
+        setCmtArray(comments);
+        console.log("💡", comments);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+    fetchComments();
+  }, [blog_id]);
 
-// ------------------------------------------------set update input fields
-const setUpdateInputFields = (data: Comment) => {
-  setIsExpanded(true);
-  SetName(data.name);
-  SetEmail(data.email);
-  SetMessage(data.message);
-  setBtnName('Update')
-  setFindCard(data)
-}
+  // ------------------------------------------------set update input fields
+  const setUpdateInputFields = (data: Comment) => {
+    setIsExpanded(true);
+    SetName(data.name);
+    SetEmail(data.email);
+    SetMessage(data.message);
+    setBtnName("Update");
+    setFindCard(data);
+  };
 
-// ------------------------------------------------Delete
-const deleteFunction = async (_id: string) => {
-  const res = await deleteComment(_id, blog_id);
-  setCmtArray(res);
-  toast.success('Comment deleted successfully');
-}
+  // ------------------------------------------------Delete
+  const deleteFunction = async (_id: string) => {
+    const res = await deleteComment(_id, blog_id);
+    setCmtArray(res);
+    toast.success("Comment deleted successfully");
+  };
 
-
-
-
-
-
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClose = () => {
-    setIsExpanded(false)
-  }
+    setIsExpanded(false);
+  };
 
   return (
     <div className="w-full p-6 bg-white border border-[#D4D7E5] rounded-lg">
@@ -178,23 +175,28 @@ const deleteFunction = async (_id: string) => {
             onChange={(e) => SetMessage(e.target.value)}
           />
           <div className="flex justify-end">
-            <Toaster richColors/>
-            <Button className="w-[161px] bg-purple-500 text-white hover:bg-purple-400 text-[18px] " onClick={postComment}>{btnName}</Button>
+            <Toaster richColors />
+            <Button
+              className="w-[161px] bg-purple-500 text-white hover:bg-purple-400 text-[18px] "
+              onClick={postComment}
+            >
+              {btnName}
+            </Button>
           </div>
         </div>
       )}
 
-      <hr className='my-4'/>
-      {cmtArray.map((comment: Comment, index: number) =>{return(
- <ReviewCard
- data={comment}
- key={index}
- setUpdateInputFields={setUpdateInputFields}
- deleteFunction={deleteFunction}
-/>
-
-      )} )}
+      <hr className="my-4" />
+      {cmtArray.map((comment: Comment, index: number) => {
+        return (
+          <ReviewCard
+            data={comment}
+            key={index}
+            setUpdateInputFields={setUpdateInputFields}
+            deleteFunction={deleteFunction}
+          />
+        );
+      })}
     </div>
-
-  )
+  );
 }
