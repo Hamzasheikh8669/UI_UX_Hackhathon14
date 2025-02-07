@@ -3,10 +3,9 @@ import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import Spmain from '../../../components/spmain';
 import Productdetails from '../../../components/productDetails';
-import { Carousel, CarouselContent, CarouselItem } from '../../../components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import Image from 'next/image';
 import { relatedProducts } from '../../../app/services/relatedProducts';
-
 
 interface ProductSection {
   title: string;
@@ -18,6 +17,7 @@ interface ProductSection {
   discountPercentage: number;
   _id: string;
 }
+
 async function Singleproduct(
   props: { 
     searchParams: Promise<{ 
@@ -43,7 +43,6 @@ async function Singleproduct(
     tags,
     isNew
   } = searchParams;
-
 
   const cards:ProductSection[] = await relatedProducts();
   return (
@@ -103,13 +102,11 @@ async function Singleproduct(
       />
 
       {/* Related Products Section */}
-      {/*related product section */}
-
-      <section className="py-12">
+       {/*related product section */}
+       <section className="py-12">
       <div className="container px-4 md:px-6">
         <h2 className="text-3xl font-bold text-center mb-10">Related Products </h2>
       </div>
-
        <Carousel
       
       opts={{
@@ -120,7 +117,6 @@ async function Singleproduct(
       
       className="w-[1236px] m-auto ">
         <CarouselContent className="flex overflow-x-auto space-x-4">
-
           {(cards.reverse()).map((item:ProductSection ,index:number) =>{
             
             return(
@@ -146,16 +142,10 @@ async function Singleproduct(
                 </div>
               </div>
             </CarouselItem>
-
             )} )}
         </CarouselContent>
       </Carousel> 
-
-
-
    
-
-
       <div className="flex justify-center mt-10">
         <Link
           href="/shop"

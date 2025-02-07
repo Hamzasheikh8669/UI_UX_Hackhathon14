@@ -1,17 +1,20 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Poppins } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
-
-const poppins = Poppins({
-  variable: "--font-poppins",
+const geistSans = Inter({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["300", "400"], 
+});
+
+const geistMono = Roboto_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export default function RootLayout({
@@ -33,7 +36,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body
-          className={` ${poppins.className} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           {studioAndHome && <Navbar />}
           {children}
