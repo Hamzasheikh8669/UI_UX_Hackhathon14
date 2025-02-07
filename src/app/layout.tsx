@@ -15,7 +15,7 @@ import "./globals.css";
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["300", "400"], // Yahan apni required weights add karein
+  weight: ["300", "400"], 
 });
 
 
