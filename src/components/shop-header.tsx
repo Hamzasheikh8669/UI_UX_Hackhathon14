@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight, } from "lucide-react";
 
-import Features from "./features";
+
 
 export default function ShopHeader() {
  
@@ -35,7 +35,7 @@ export default function ShopHeader() {
         </div>
       </div>
 
-      <Features />
+      
     </div>
   );
 }

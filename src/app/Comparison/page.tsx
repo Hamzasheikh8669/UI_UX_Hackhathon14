@@ -3,8 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
-import Features from "@/components/features";
+
 import ProductComparison from "@/components/product-comparison";
+import FeatureSection from "@/components/feacturesSection";
 
 export default function Comparison() {
   return (
@@ -45,7 +46,7 @@ export default function Comparison() {
       <ProductComparison />
       {/* Features Section */}
       <div className="space-y-12 px-4 py-8 sm:space-y-8 sm:py-6">
-        <Features />
+      <FeatureSection/>
       </div>
     </div>
   );

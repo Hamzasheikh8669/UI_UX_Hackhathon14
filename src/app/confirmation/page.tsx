@@ -1,6 +1,6 @@
-//src\app\confirmation\page.tsx
-import React from "react";
 
+import React from "react";
+import { ChevronRight } from "lucide-react";
 import {
   Table,
   TableCaption,
@@ -10,9 +10,8 @@ import {
   TableRow,
   TableCell,
   TableHead,
-} from "../../components/ui/table";
+} from "@/components/ui/table";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 
 async function Confirmation({
   searchParams,
@@ -38,9 +37,7 @@ async function Confirmation({
             <Link href="/" className="hover:underline">
               Home
             </Link>
-            <span>
-              <ChevronRight />
-            </span>
+            <ChevronRight className="h-4 w-4 text-gray-400" />
             <span>Confirmation</span>
           </div>
         </div>

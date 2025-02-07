@@ -5,9 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import Pagination from "@/components/pagination";
-import Features from "@/components/features";
 import { BlogPostCard } from "@/components/blog-post-card";
 import { BlogSidebar } from "@/components/blog-sidebar";
+import FeatureSection from "@/components/feacturesSection";
 
 const blogPosts = [
   {
@@ -89,7 +89,7 @@ export default function Blog() {
       <div className="space-y-12">
         {/* Other shop content */}
         <Pagination currentPage={1} totalPages={3} />
-        <Features />
+        <FeatureSection />
       </div>
     </div>
   );

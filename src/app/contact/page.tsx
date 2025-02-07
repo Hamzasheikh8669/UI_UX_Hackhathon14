@@ -3,7 +3,8 @@
 "use client";
 
 
-import Features from "@/components/features";
+import FeatureSection from "@/components/feacturesSection";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -160,7 +161,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-    <Features />  
+   <FeatureSection />
 
       </div>
   );
