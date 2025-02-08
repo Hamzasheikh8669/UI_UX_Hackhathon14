@@ -1,12 +1,12 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
-import "./globals.css";
+import { usePathname } from "next/navigation";
+
 const geistSans = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,9 +19,9 @@ const geistMono = Roboto_Mono({
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   const pathname = usePathname();
 
   const isAdmin = pathname.startsWith("/admin");
@@ -33,13 +33,15 @@ export default function RootLayout({
     !isAdmin && !isOrders && !isCustomers && !isStatistics && !isReviews;
 
   return (
-    <ClerkProvider>
+   <ClerkProvider>
       <html lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           {studioAndHome && <Navbar />}
+
           {children}
+
           <Footer />
         </body>
       </html>

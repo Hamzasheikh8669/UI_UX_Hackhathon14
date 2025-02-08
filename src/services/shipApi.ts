@@ -21,22 +21,33 @@ interface data {
   to_name: string;
   to_phone: string;
   to_address: string;
-  to_city:string;
-  
+  to_city: string;
+
   from_name: string;
   from_company: string;
   from_address: string;
   from_phone: string;
 
   weight: number;
-  height:number;
-  width:number;
-  length:number;
+  height: number;
+  width: number;
+  length: number;
 }
 export async function postRequest(item: data) {
-  const { to_name, to_phone, to_address,to_city,from_name,from_company,from_phone,from_address,
-    weight,height,width,length
-   } = item;
+  const {
+    to_name,
+    to_phone,
+    to_address,
+    to_city,
+    from_name,
+    from_company,
+    from_phone,
+    from_address,
+    weight,
+    height,
+    width,
+    length,
+  } = item;
 
   const res = await fetch(`https://api.shipengine.com/v1/labels`, {
     method: "POST",
@@ -89,6 +100,5 @@ export async function postRequest(item: data) {
 
   const data = await res.json();
 
-  
   return data;
 }
